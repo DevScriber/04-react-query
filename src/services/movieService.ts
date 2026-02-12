@@ -1,19 +1,25 @@
 import type { IMovie } from './../types/movie';
 import axios from "axios"
+import toast from "react-hot-toast";
 
 interface MovieHttpResponse {
     results: IMovie[]
+    total_pages: number
 }
 
-export default async function FetchMovies(query: string) {
+interface IFetchMovies {
+    query: string,
+    page: number
+}
+
+export default async function fetchMovies({query, page}:IFetchMovies) {
     const myKey = import.meta.env.VITE_TMDB_TOKEN;
     const url = `https://api.themoviedb.org/3/search/movie`;
 
     const options = {
         params: {
             query,
-            language: 'en-US',
-            page: 1
+            page
         },
         headers: {
             Authorization: `Bearer ${myKey}`,
@@ -22,11 +28,11 @@ export default async function FetchMovies(query: string) {
 
     const response = await axios.get<MovieHttpResponse>(url, options);
 
+    if (response.data.results.length === 0) {
+        toast.error('No movies found for your request.');
+    }
+
     return (
         response.data
     )
-
-
-
-
 }
