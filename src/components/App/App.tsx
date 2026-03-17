@@ -1,9 +1,9 @@
 import css from './App.module.css'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import type { Movie } from "../../types/movie";
 import fetchMovies from "../../services/movieService";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import SearchBar from "../SearchBar/SearchBar"
 import MovieGrid from "../MovieGrid/MovieGrid";
 import Loader from "../Loader/Loader";
@@ -22,13 +22,21 @@ export default function App() {
     placeholderData: keepPreviousData
   })
 
+  useEffect(() => {
+    if (isSuccess && data?.results.length === 0) {
+      toast.error("No movies found for your search query.");
+    }
+  }, [isSuccess, data, query]);
+
   const [isModalOpen, setIsModalOpen] = useState<Movie | null>(null)
 
   const openModal = (movie: Movie) => setIsModalOpen(movie)
   const closeModal = () => setIsModalOpen(null)
 
   const handleSearch = async (queryMovie: string) => {
+    if (queryMovie === query) return
     setQuery(queryMovie)
+    setPage(1)
   }
 
   return (

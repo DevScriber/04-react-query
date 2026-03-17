@@ -4,10 +4,10 @@ import toast from 'react-hot-toast';
 const notify = () => toast.error('Please enter your search query.');
 
 
-interface onSubmitProps {
+interface SearchBarProps {
     onSubmit: (query: string) => void
 }
-export default function SearchBar({ onSubmit }: onSubmitProps) {
+export default function SearchBar({ onSubmit }: SearchBarProps) {
 
 
     const handleForm = (formData: FormData) => {
