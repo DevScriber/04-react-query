@@ -1,10 +1,10 @@
 import { createPortal } from "react-dom";
-import type { IMovie } from "../../types/movie";
+import type { Movie } from "../../types/movie";
 import css from "./MovieModal.module.css"
 import { useEffect } from "react";
 
 interface MovieModalProps {
-    movie: IMovie
+    movie: Movie
     onClose: () => void
 }
 

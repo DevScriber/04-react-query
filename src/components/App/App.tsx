@@ -1,7 +1,7 @@
 import css from './App.module.css'
 import { useState } from "react";
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import type { IMovie } from "../../types/movie";
+import type { Movie } from "../../types/movie";
 import fetchMovies from "../../services/movieService";
 import { Toaster } from "react-hot-toast";
 import SearchBar from "../SearchBar/SearchBar"
@@ -22,9 +22,9 @@ export default function App() {
     placeholderData: keepPreviousData
   })
 
-  const [isModalOpen, setIsModalOpen] = useState<IMovie | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState<Movie | null>(null)
 
-  const openModal = (movie: IMovie) => setIsModalOpen(movie)
+  const openModal = (movie: Movie) => setIsModalOpen(movie)
   const closeModal = () => setIsModalOpen(null)
 
   const handleSearch = async (queryMovie: string) => {
